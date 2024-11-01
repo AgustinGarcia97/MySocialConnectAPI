@@ -36,7 +36,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="photo_id")
     private Photo profilePicture;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
