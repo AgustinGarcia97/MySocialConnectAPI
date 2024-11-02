@@ -26,7 +26,11 @@ public class Post {
 
     //Ubication
 
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="post_id")
+    private List<Photo> photoList;
+
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private List<Comment> comments;
 
@@ -45,6 +49,14 @@ public class Post {
     @ManyToOne()
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public void setCommentToList(Comment comment) {
+        comments.add(comment);
+    }
+
+    public void setLikeToList(Like like) {
+        likes.add(like);
+    }
 
 
 }
