@@ -1,5 +1,6 @@
 package com.example.socialconnect.controller.requests;
 
+import com.example.socialconnect.model.Role;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,5 +20,6 @@ public class CreateUserRequest {
     private String email;
     private String password;
     private String photoUrl;
+    private Role role;
 
 }

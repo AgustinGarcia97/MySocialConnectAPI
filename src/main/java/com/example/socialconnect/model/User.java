@@ -3,10 +3,15 @@ package com.example.socialconnect.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,10 +20,11 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+@Builder
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name="user_id")
+    @Column(name = "user_id")
     private UUID userId;
 
     @Column(nullable = false)
@@ -27,17 +33,20 @@ public class User {
     @Column(nullable = false)
     private String lastname;
 
-    @Column(unique=true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(unique=true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="photo_id")
+    @JoinColumn(name = "photo_id")
     private Photo profilePicture;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -59,6 +68,35 @@ public class User {
     @ManyToMany(mappedBy = "following")
     private List<User> followers;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
 
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
+
+
