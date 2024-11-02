@@ -15,4 +15,15 @@ public class Like {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
     private Long likeId;
+
+    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    private Comment comment;
+
+    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    private Post post;
+
+    @ManyToOne
+    private User user;
+
+
 }
