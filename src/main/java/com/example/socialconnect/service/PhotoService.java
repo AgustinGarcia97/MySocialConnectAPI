@@ -22,9 +22,11 @@ public class PhotoService {
 
     @Transactional
     public PhotoDTO addPhoto(String photoUrl) {
-        Photo photo = photoRepository.save(modelMapper.map(photoUrl, Photo.class));
+        Photo photo = new Photo();
+        photo.setPhotoUrl(photoUrl);
+        Photo saved = photoRepository.save(photo);
 
-        return modelMapper.map(photo, PhotoDTO.class);
+        return modelMapper.map(saved, PhotoDTO.class);
 
     }
 
