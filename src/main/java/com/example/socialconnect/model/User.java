@@ -43,6 +43,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> userPostList;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> commentList;
+
+
     @ManyToMany
     @JoinTable(
             name = "follow",

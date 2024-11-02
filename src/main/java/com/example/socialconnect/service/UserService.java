@@ -42,8 +42,13 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO getUserById(UUID userId) {
+    public UserDTO getUserDTOById(UUID userId) {
         return modelMapper.map( userRepository.findById(userId), UserDTO.class);
+    }
+
+    @Transactional
+    public User getUserById(UUID userId) {
+        return  userRepository.findById(userId).get();
     }
 
 
@@ -92,7 +97,7 @@ public class UserService {
 
     @Transactional
     public boolean deleteUser(UUID userId) {
-        UserDTO userToDelete = getUserById(userId);
+        UserDTO userToDelete = getUserDTOById(userId);
         if(userToDelete != null){
             userRepository.deleteById(userId);
             return true;
