@@ -16,4 +16,19 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="tag_id")
     private Long tagId;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name="post_id")
+    private Post post;
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "tagId=" + tagId +
+                '}';
+    }
 }
