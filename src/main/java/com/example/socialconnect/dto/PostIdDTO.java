@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostIdDTO {
-    private String postId;
+    private Long postId;
 }

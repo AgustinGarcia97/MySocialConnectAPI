@@ -58,5 +58,13 @@ public class Post {
         likes.add(like);
     }
 
-
+    @Override
+    public String toString() {
+        return "Post{" +
+                "postId=" + postId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                "}"
+                ;
+    }
 }

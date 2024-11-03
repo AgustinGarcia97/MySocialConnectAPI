@@ -15,4 +15,5 @@ public class PostDTO {
     private String description;
     private List<PhotoDTO> photoList;
     private List<CommentDTO> comments;
+    private List<TagDTO> tagged;
 }
