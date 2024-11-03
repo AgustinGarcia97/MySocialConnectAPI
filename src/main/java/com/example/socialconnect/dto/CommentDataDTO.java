@@ -7,17 +7,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CommentDTO {
+public class CommentDataDTO {
     private Long commentId;
     private String comment;
-    private UserIdDTO user;
     private LocalDateTime createdAt;
     private List<LikeDTO> likes;
-
 }
