@@ -55,8 +55,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Comment> commentList;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Tag> tags;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "follow",
             joinColumns = @JoinColumn(name = "follower_id"),
@@ -64,8 +66,7 @@ public class User implements UserDetails {
     )
     private List<User> following;
 
-
-    @ManyToMany(mappedBy = "following")
+    @ManyToMany(mappedBy = "following", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<User> followers;
 
     @Override
@@ -96,6 +97,19 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
     }
 }
 

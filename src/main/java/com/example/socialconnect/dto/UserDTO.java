@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -17,5 +18,7 @@ public class UserDTO {
     private String username;
     private String password;
     private String photoUrl;
+    private List<FollowerDTO> followers;
+    private List<FollowedDTO> following;
 
 }
