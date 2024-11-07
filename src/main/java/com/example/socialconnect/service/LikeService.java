@@ -1,7 +1,10 @@
 package com.example.socialconnect.service;
 
 import com.example.socialconnect.controller.requests.CreateLikeRequest;
+import com.example.socialconnect.dto.CommentDTO;
+import com.example.socialconnect.dto.CommentIdDTO;
 import com.example.socialconnect.dto.LikeDTO;
+import com.example.socialconnect.dto.UserIdDTO;
 import com.example.socialconnect.model.Comment;
 import com.example.socialconnect.model.Like;
 import com.example.socialconnect.model.Post;
@@ -51,8 +54,9 @@ public class LikeService {
 
 
        Like created = likeRepository.save(like);
-
         return modelMapper.map(created, LikeDTO.class);
+
+
     }
 
 

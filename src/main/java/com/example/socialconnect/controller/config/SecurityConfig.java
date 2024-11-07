@@ -3,6 +3,8 @@ package com.example.socialconnect.controller.config;
 
 
 import com.example.socialconnect.model.Role;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +32,7 @@ de configuraciones.
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Data
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
@@ -40,12 +43,18 @@ public class SecurityConfig {
         http
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req -> req.requestMatchers("/api/v1/auth/**").permitAll()
+                .authorizeHttpRequests(req -> req
+                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/posts/fetch").permitAll()
                         .requestMatchers("/error/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/user/**").hasAuthority(Role.ADMIN.name())
                         .requestMatchers("/user/**").hasAnyAuthority(Role.USER.name())
                         .requestMatchers("/user/**").hasAnyAuthority(Role.ADMIN.name())
-                        .requestMatchers("/posts/**").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
+
+                        .requestMatchers(HttpMethod.GET, "/api/v1/posts/{postId}").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
+
+                        .requestMatchers(HttpMethod.POST, "/api/v1/posts/create").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
+
                         .anyRequest()
                         .authenticated())
 
@@ -56,8 +65,9 @@ public class SecurityConfig {
         return http.build();
     }
 
-
 }
+
+
 
 //aca se verifica, que endpoints de la app, tendrian que pedir autorizacion, y cuales no. Y ademas que endpoints voy a querer que solo accedan aquellos request que pertenezcan a usuario
 //y rol en particular

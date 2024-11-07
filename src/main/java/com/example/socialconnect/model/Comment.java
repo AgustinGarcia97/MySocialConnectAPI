@@ -1,5 +1,6 @@
 package com.example.socialconnect.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
 
     @OneToMany(cascade = CascadeType.DETACH)
     private List<Like> likes;

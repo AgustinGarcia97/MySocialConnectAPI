@@ -10,10 +10,13 @@ import com.example.socialconnect.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -42,7 +45,13 @@ public class PostService {
         return modelMapper.map(findPostById(postId), PostDTO.class);
     }
 
-
+    @Transactional
+    public List<PostDTO> getSomePosts() {
+        Pageable pageable = PageRequest.of(0,10);
+        List<Post> posts = postRepository.findAll(pageable).getContent();
+        List<PostDTO> postDTOs = posts.stream().map(post -> modelMapper.map(post, PostDTO.class)).toList();
+        return postDTOs;
+    }
 
 
     @Transactional
@@ -74,7 +83,6 @@ public class PostService {
         Post savedPost = postRepository.save(post);
 
         return modelMapper.map(savedPost, PostDTO.class);
-
 
     }
 

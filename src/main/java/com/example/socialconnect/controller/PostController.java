@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController()
 @RequiredArgsConstructor
-@RequestMapping(value = "/posts", produces = "application/json")
+@RequestMapping(value = "/api/v1/posts", produces = "application/json")
 public class PostController {
 
     private final PostService postService;
@@ -18,6 +20,12 @@ public class PostController {
     public ResponseEntity<PostDTO> getPost(@PathVariable Long postId) {
         PostDTO postDTO = postService.findPostDTOById(postId);
         return ResponseEntity.ok(postDTO);
+    }
+
+    @GetMapping("/fetch")
+    public ResponseEntity<List<PostDTO>> getAllPosts() {
+        List<PostDTO> postsDTO = postService.getSomePosts();
+        return ResponseEntity.ok(postsDTO);
     }
 
 
