@@ -34,11 +34,15 @@ public class Comment {
     private User user;
 
 
-    @OneToMany(cascade = CascadeType.DETACH)
+    @OneToMany(orphanRemoval = true,  cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Like> likes;
 
     public void addLikeToList(Like like) {
         this.likes.add(like);
+    }
+
+    public void removeLikeChild(Like like){
+        this.likes.remove(like);
     }
 
     @Override

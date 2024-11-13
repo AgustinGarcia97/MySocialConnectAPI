@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/comments")
 @AllArgsConstructor
@@ -19,9 +21,15 @@ public class CommentController {
         return ResponseEntity.ok(commentDTO);
     }
 
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<List<CommentDTO>> getComments(@PathVariable Long postId) {
+        List<CommentDTO> commentDTOS = commentService.getCommentByPostId(postId);
+        return ResponseEntity.ok(commentDTOS);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<CommentDTO> createComment(@RequestBody CreateCommentRequest comment) {
+
         CommentDTO commentDTO = commentService.createComment(comment);
         return ResponseEntity.ok(commentDTO);
     }

@@ -47,6 +47,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/posts/fetch").permitAll()
                         .requestMatchers("/error/**").permitAll()
+                        .requestMatchers("/users/user").permitAll()
+                        .requestMatchers("/api/v1/follow/{followerId}/follow/{followedId}").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
                         .requestMatchers(HttpMethod.DELETE, "/user/**").hasAuthority(Role.ADMIN.name())
                         .requestMatchers("/user/**").hasAnyAuthority(Role.USER.name())
                         .requestMatchers("/user/**").hasAnyAuthority(Role.ADMIN.name())

@@ -1,5 +1,7 @@
 package com.example.socialconnect.controller.requests;
 
+import com.example.socialconnect.dto.TagDTO;
+import com.example.socialconnect.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,4 +17,6 @@ public class CreatePostRequest {
     private String description;
     private UUID userId;
     private List<String> photos;
+    private String location;
+    private List<String> tagged;
 }

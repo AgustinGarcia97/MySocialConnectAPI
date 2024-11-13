@@ -42,6 +42,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column()
+    private String biography;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -98,6 +101,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 
     @Override
     public String toString() {

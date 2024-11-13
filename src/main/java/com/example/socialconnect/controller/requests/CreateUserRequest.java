@@ -19,7 +19,8 @@ public class CreateUserRequest {
     private String username;
     private String email;
     private String password;
-    private String photoUrl;
+    private String profilePicture;
     private Role role;
+
 
 }

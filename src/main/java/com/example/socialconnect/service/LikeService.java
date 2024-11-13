@@ -9,13 +9,21 @@ import com.example.socialconnect.model.Comment;
 import com.example.socialconnect.model.Like;
 import com.example.socialconnect.model.Post;
 import com.example.socialconnect.model.User;
+import com.example.socialconnect.repository.CommentRepository;
 import com.example.socialconnect.repository.LikeRepository;
+import com.example.socialconnect.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -29,6 +37,8 @@ public class LikeService {
     private final UserService userService;
 
     private final ModelMapper modelMapper;
+    private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public LikeDTO addLike(CreateLikeRequest createLikeRequest) {
@@ -57,6 +67,61 @@ public class LikeService {
         return modelMapper.map(created, LikeDTO.class);
 
 
+    }
+
+    @Transactional
+    public List<LikeDTO> getLikesPosts(Long postId) {
+
+        return likeRepository
+                .findAll()
+                .stream()
+                .filter(like -> Objects.equals(like.getPost().getPostId(), postId))
+                .map(like -> modelMapper.map(like,LikeDTO.class))
+                .collect(Collectors.toList());
+
+    }
+
+
+    @Transactional
+    public List<LikeDTO> getLikes(Long postId) {
+        List<Comment> comments = postRepository.findById(postId).get().getComments();
+
+        return comments.stream().map(comment -> modelMapper.map(comment.getLikes(),LikeDTO.class)).collect(Collectors.toList());
+
+    }
+
+
+    @Transactional
+    public String deleteLike(Long likeId,Long commentId) {
+        Comment comment = commentService.getCommentById(commentId);
+
+        comment.removeLikeChild(likeRepository.findById(likeId).get());
+        commentRepository.save(comment);
+        likeRepository.deleteById(likeId);
+        return ("Dislike exitoso");
+    }
+
+    @Transactional
+    public String deleteLikePost(Long postId, UUID userId){
+        List<Like> likes = likeRepository
+                .findAll()
+                .stream()
+                .filter(like -> like.getPost() != null)
+                .filter(like -> Objects.equals(like.getPost().getPostId(), postId))
+                .toList();
+
+        Optional<Like> like = likes
+                                .stream()
+                                .filter(l -> l.getUser().getUserId().equals(userId) )
+                                .findFirst();
+
+
+        like.ifPresent(value -> likeRepository.deleteById(value.getLikeId()));
+
+
+
+
+        return "Dislike post exitoso";
     }
 
 

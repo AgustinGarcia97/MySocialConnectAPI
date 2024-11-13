@@ -7,10 +7,10 @@ import com.example.socialconnect.service.LikeService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -24,5 +24,32 @@ public class LikeController {
         LikeDTO created = likeService.addLike(createLikeRequest);
         return ResponseEntity.ok(created);
     }
+
+    @GetMapping("/{postId}")
+    private ResponseEntity<List<LikeDTO>> getLikesPosts(@PathVariable Long postId) {
+        List<LikeDTO> likes = likeService.getLikesPosts(postId);
+        return ResponseEntity.ok(likes);
+    }
+
+    @GetMapping("/{postId}/comments")
+    private ResponseEntity<List<LikeDTO>> getLikesPostsComments(@PathVariable Long postId ) {
+        List<LikeDTO> likes = likeService.getLikes(postId);
+        return ResponseEntity.ok(likes);
+
+    }
+
+
+    @DeleteMapping("/{likeId}/{commentId}")
+    private ResponseEntity<String> deleteLike(@PathVariable Long likeId, @PathVariable Long commentId){
+        return ResponseEntity.ok(likeService.deleteLike(likeId,commentId));
+    }
+
+
+    @DeleteMapping("/{postId}/user/{userId}")
+    private ResponseEntity<String> deleteLikePost(@PathVariable Long postId, @PathVariable UUID userId){
+        likeService.deleteLikePost(postId,userId);
+        return ResponseEntity.ok("like deleted");
+    }
+
 
 }

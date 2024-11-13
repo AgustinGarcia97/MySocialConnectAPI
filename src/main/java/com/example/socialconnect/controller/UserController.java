@@ -2,6 +2,7 @@ package com.example.socialconnect.controller;
 
 
 import com.example.socialconnect.controller.requests.CreateUserRequest;
+import com.example.socialconnect.controller.requests.SearchUserRequest;
 import com.example.socialconnect.controller.requests.UpdateUserRequest;
 import com.example.socialconnect.dto.UserDTO;
 import com.example.socialconnect.service.UserService;
@@ -35,6 +36,13 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> getSomeUsers() {
         List<UserDTO> someUsers = userService.getSomeUsers();
         return new ResponseEntity<>(someUsers, OK);
+    }
+
+    @PostMapping("/user")
+    public ResponseEntity<List<UserDTO>> search(@RequestBody SearchUserRequest searchUserRequest) {
+       List<UserDTO> userDTOs = userService.search(searchUserRequest);
+       return new ResponseEntity<>(userDTOs, OK);
+
     }
 
 

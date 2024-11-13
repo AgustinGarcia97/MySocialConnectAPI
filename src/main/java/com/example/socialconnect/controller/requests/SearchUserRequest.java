@@ -1,18 +1,14 @@
-package com.example.socialconnect.dto;
+package com.example.socialconnect.controller.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserIdDTO {
-    private UUID userId;
+public class SearchUserRequest {
+    private String username;
     private String name;
     private String lastname;
-    private String username;
-    private PhotoDTO profilePicture;
 }

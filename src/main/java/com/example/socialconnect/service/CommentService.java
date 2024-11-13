@@ -11,6 +11,10 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class CommentService {
@@ -66,4 +70,12 @@ public class CommentService {
 
     }
 
+    public List<CommentDTO> getCommentByPostId(Long postId) {
+        return   commentRepository
+                .findAll()
+                .stream()
+                .filter(comment -> Objects.equals(comment.getPost().getPostId(), postId))
+                .map(comment -> modelMapper.map(comment, CommentDTO.class))
+                .collect(Collectors.toList());
+    }
 }

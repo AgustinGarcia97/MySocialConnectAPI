@@ -17,8 +17,10 @@ public class UserDTO {
     private String email;
     private String username;
     private String password;
-    private String photoUrl;
+    private PhotoDTO profilePicture;
     private List<FollowerDTO> followers;
     private List<FollowedDTO> following;
+    private String bio;
+    private List<PostDTO> posts;
 
 }

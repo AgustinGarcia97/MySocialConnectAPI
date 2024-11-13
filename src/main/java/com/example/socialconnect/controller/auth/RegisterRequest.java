@@ -19,5 +19,7 @@ public class RegisterRequest {
     private String email;
     private String password;
     private String username;
+    private String profilePicture;
     private Role role;
+    private String bio;
 }

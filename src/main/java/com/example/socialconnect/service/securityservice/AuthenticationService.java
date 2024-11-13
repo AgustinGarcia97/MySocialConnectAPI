@@ -8,9 +8,11 @@ import com.example.socialconnect.controller.config.JwtService;
 import com.example.socialconnect.dto.PhotoDTO;
 import com.example.socialconnect.dto.PostDTO;
 import com.example.socialconnect.dto.UserIdDTO;
+import com.example.socialconnect.model.Photo;
 import com.example.socialconnect.model.Role;
 import com.example.socialconnect.repository.UserRepository;
 import com.example.socialconnect.model.User;
+import com.example.socialconnect.service.PhotoService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +30,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final ModelMapper modelMapper;
+    private final PhotoService photoService;
 
     public AuthenticationResponse register(RegisterRequest request) {
 
@@ -36,7 +39,9 @@ public class AuthenticationService {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .profilePicture(modelMapper.map(photoService.addPhoto(request.getProfilePicture()), Photo.class))
                 .username(request.getUsername())
+                .biography(request.getBio())
                 .role(request.getRole())
                 .build();
 
@@ -95,6 +100,7 @@ public class AuthenticationService {
                         .map(following -> modelMapper.map(following, UserIdDTO.class))
                         .collect(Collectors.toList())
                 )
+                .bio(user.getBiography())
                 .build();
     }
 }

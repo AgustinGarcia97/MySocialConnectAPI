@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -15,7 +16,8 @@ public class PostDTO {
     private String description;
     private List<PhotoDTO> photoList;
     private List<CommentDTO> comments;
-
+    private String location;
     private List<TagDTO> tagged;
     private UserIdDTO user;
+    private LocalDateTime createdAt;
 }

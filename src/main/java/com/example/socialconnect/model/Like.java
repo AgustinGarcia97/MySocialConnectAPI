@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
 
 @Entity
 @Table(name="like_table")
@@ -18,11 +19,11 @@ public class Like {
 
     private Long likeId;
 
-    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="comment_id")
     private Comment comment;
 
-    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="post_id")
     private Post post;
 
@@ -31,6 +32,10 @@ public class Like {
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
+
+
+
+
 
     @Override
     public String toString() {

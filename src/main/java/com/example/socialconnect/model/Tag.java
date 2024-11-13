@@ -25,6 +25,10 @@ public class Tag {
     @JoinColumn(name="post_id")
     private Post post;
 
+    public Tag(User u){
+        this.user = u;
+    }
+
     @Override
     public String toString() {
         return "Tag{" +

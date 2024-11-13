@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Table
@@ -25,7 +26,11 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    //Ubication
+    @Column()
+    private String location;
+
+    @Column()
+    private LocalDateTime createdAt;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="post_id")
@@ -36,7 +41,7 @@ public class Post {
     private List<Comment> comments;
 
 
-    @OneToMany()
+    @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private List<Like> likes;
 
@@ -44,7 +49,7 @@ public class Post {
     @JoinColumn(name = "post_id")
     private List<Hashtag> hashtags;
 
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private List<Tag> tagged;
 

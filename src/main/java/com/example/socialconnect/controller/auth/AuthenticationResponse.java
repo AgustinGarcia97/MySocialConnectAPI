@@ -32,4 +32,5 @@ public class AuthenticationResponse {
     private String username;
     private List<PostDTO> posts;
     private PhotoDTO profilePicture;
+    private String bio;
 }
