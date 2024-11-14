@@ -126,7 +126,7 @@ public class UserService {
             cq.orderBy(cb.asc(cb.length(userRoot.get("username"))));
         }
 
-        // futuros criterios de busqueda
+
 
         cq.where(predicates.toArray(new Predicate[0]));
 

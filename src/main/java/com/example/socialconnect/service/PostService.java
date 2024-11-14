@@ -137,5 +137,35 @@ public class PostService {
         return postsDTO.subList(fromIndex, toIndex);
     }
 
+    @Transactional
+    public List<PostDTO> getPostLiked(UUID userId) {
+        return postRepository.findAll()
+                        .stream()
+                        .filter(post ->
+                                post.getLikes()
+                                .stream()
+                                        .anyMatch(like ->
+                                                        like.getUser()
+                                                        .getUserId()
+                                                        .equals(userId)))
+                        .map(p -> modelMapper.map(p, PostDTO.class))
+                        .toList();
+    };
+
+    @Transactional
+    public List<PostDTO> getPostTagged(UUID userId) {
+        return postRepository.findAll()
+                .stream()
+                .filter(post -> post.getTagged()
+                        .stream()
+                        .anyMatch(tag -> tag.getUser()
+                                .getUserId().equals(userId
+                                )
+                        )
+                )
+                .map(post -> modelMapper.map(post,PostDTO.class)).toList();
+    }
+
+
 
 }

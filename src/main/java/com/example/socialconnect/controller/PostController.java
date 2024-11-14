@@ -35,8 +35,17 @@ public class PostController {
         return ResponseEntity.ok(postsDTO);
     }
 
+    @GetMapping("/like/{userId}")
+    public ResponseEntity<List<PostDTO>> getPostLikedByUserId(@PathVariable UUID userId) {
+        List<PostDTO> postsDTO = postService.getPostLiked(userId);
+        return ResponseEntity.ok(postsDTO);
+    }
 
-
+    @GetMapping("/tag/{userId}")
+    public ResponseEntity<List<PostDTO>> getPostTaggedByUserId(@PathVariable UUID userId) {
+        List<PostDTO> postsDTO = postService.getPostTagged(userId);
+        return ResponseEntity.ok(postsDTO);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<PostDTO> createPost(@RequestBody CreatePostRequest createPostRequest) {
